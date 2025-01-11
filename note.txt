@@ -1,7 +1,7 @@
 
-php artisan migrate --path=/database/migrations/2024_10_14_042230_add_version_to_wallets_table.php
+php artisan migrate --path=/database/migrations/2025_01_11_052808_add_game_name_column_to_bet_n_results_table.php
 
-php artisan make:migration add_order_column_to_bet_n_results_table --table=bet_n_results
+php artisan make:migration add_game_name_column_to_bet_n_results_table --table=bet_n_results
 
 
 // to remove laravel log

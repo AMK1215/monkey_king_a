@@ -1,7 +1,7 @@
 
 php artisan migrate --path=/database/migrations/2025_01_11_052808_add_game_name_column_to_bet_n_results_table.php
 
-php artisan make:migration add_game_name_column_to_bet_n_results_table --table=bet_n_results
+php artisan make:migration add_after_before_column_to_results_table --table=results
 
 
 // to remove laravel log

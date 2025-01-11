@@ -272,7 +272,7 @@ class BetResultController extends Controller
         ]);
 
         Log::info('Game result logged successfully', [
-            'PlayerId' => $transaction['PlayerId'], 
+            'PlayerId' => $transaction['PlayerId'],
             'ResultId' => $transaction['ResultId'],
             'Old Balance' => $beforeBalance,
             'New Balance' => $newBalance

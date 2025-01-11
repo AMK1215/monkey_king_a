@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Admin\Product;
+
 
 class ReportVersionTwoController extends Controller
 {
@@ -100,8 +102,8 @@ class ReportVersionTwoController extends Controller
         ->where('br.player_id', $player_id)
         ->where('br.game_code', $game_code)
         ->get();
-
-    return view('report.v2_report_detail', compact('details'));
+        $productTypes = Product::where('is_active', 1)->get();
+    return view('report.v2_report_detail', compact('details', 'productTypes'));
 }
 
 

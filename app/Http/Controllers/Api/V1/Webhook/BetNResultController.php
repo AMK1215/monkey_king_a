@@ -14,6 +14,8 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\Admin\GameList;
+
 
 class BetNResultController extends Controller
 {
@@ -92,6 +94,11 @@ class BetNResultController extends Controller
                 $request->getMember()->wallet->refreshBalance();
                 $newBalance = $request->getMember()->balanceFloat;
 
+                // Retrieve game information based on the game code
+                $game = GameList::where('game_code', $transaction['GameCode'])->first();
+                $game_name = $game ? $game->game_name : null;
+                $provider_name = $game ? $game->game_provide_name : null;
+
                 // Create the transaction record
                 BetNResult::create([
                     'user_id' => $player->id,
@@ -102,10 +109,12 @@ class BetNResultController extends Controller
                     'currency' => $transaction['Currency'],
                     'tran_id' => $transaction['TranId'],
                     'game_code' => $transaction['GameCode'],
+                    'game_name' => $game_name,
                     'bet_amount' => $transaction['BetAmount'],
                     'win_amount' => $transaction['WinAmount'],
                     'net_win' => $transaction['WinAmount'] - $transaction['BetAmount'],
                     'tran_date_time' => Carbon::parse($transaction['TranDateTime'])->format('Y-m-d H:i:s'),
+                    'provider_code' => $provider_name,
                     'auth_token' => $transaction['AuthToken'] ?? 'default_password',
                     'status' => 'processed',
 

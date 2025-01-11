@@ -91,6 +91,7 @@ class BetNResultController extends Controller
                 }
 
                 // Refresh and get the updated balance
+                $afterBalance = $request->getMember()->balanceFloat;
                 $request->getMember()->wallet->refreshBalance();
                 $newBalance = $request->getMember()->balanceFloat;
 
@@ -117,6 +118,8 @@ class BetNResultController extends Controller
                     'provider_code' => $provider_name,
                     'auth_token' => $transaction['AuthToken'] ?? 'default_password',
                     'status' => 'processed',
+                    'old_balance' => $afterBalance,
+                    'new_balance' => $newBalance
 
                 ]);
 

@@ -30,6 +30,8 @@ class BetNResult extends Model
         'auth_token',
         'status',
         'cancelled_at',
+        'old_balance',
+        'new_balance'
     ];
 
     public function user()

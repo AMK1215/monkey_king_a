@@ -28,6 +28,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
 use App\Models\Admin\Role;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReportVersionTwoController;
+
 
 Route::group([
     'prefix' => 'admin', 'as' => 'admin.',
@@ -126,6 +128,10 @@ Route::group([
         Route::get('index', [ReportController::class, 'index'])->name('report.index');
         Route::get('/detail/{playerId}', [ReportController::class, 'detail'])->name('report.detail');
     });
+
+
+    Route::get('/game-report', [ReportVersionTwoController      ::class, 'getGameReport'])->name('game.report');
+
 
     // get bet deatil
     Route::get('get-bet-detail', [GetBetDetailController::class, 'index'])->name('getBetDetail');

@@ -21,6 +21,7 @@ class BetNResult extends Model
         'currency',
         'tran_id',
         'game_code',
+        'game_name',
         'bet_amount',
         'win_amount',
         'net_win',

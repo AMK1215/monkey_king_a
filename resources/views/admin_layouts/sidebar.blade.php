@@ -22,6 +22,15 @@
             </li>
         @endcan
 
+        @can('owner_access')
+            <li class="nav-item">
+                <a class="nav-link text-white " href="{{ route('admin.game.report') }}">
+                    <span class="sidenav-mini-icon"> <i class="fa-solid fa-chart-column"></i> </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> V2-Win/lose Report </span>
+                </a>
+            </li>
+        @endcan
+
         @can('player_index')
             <li class="nav-item">
                 <a class="nav-link text-white " href="{{ route('admin.report.index') }}">
@@ -101,16 +110,16 @@
             </li>
         @endcan
         <hr class="horizontal light mt-0">
-        
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link text-white "
-                    aria-controls="dashboardsExamples" role="button" aria-expanded="false">
-                    <i class="material-icons py-2">settings</i>
-                    <span class="nav-link-text ms-2 ps-1">General Setup</span>
-                </a>
-                <div class="collapse" id="dashboardsExamples">
-                    <ul class="nav">
-                        @canany(['master_access', 'agent_access'])
+
+        <li class="nav-item">
+            <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link text-white "
+                aria-controls="dashboardsExamples" role="button" aria-expanded="false">
+                <i class="material-icons py-2">settings</i>
+                <span class="nav-link-text ms-2 ps-1">General Setup</span>
+            </a>
+            <div class="collapse" id="dashboardsExamples">
+                <ul class="nav">
+                    @canany(['master_access', 'agent_access'])
                         <li class="nav-item ">
                             <a class="nav-link text-white " href="{{ route('admin.banners.index') }}">
                                 <span class="sidenav-mini-icon"> <i class="fa-solid fa-panorama"></i> </span>
@@ -136,8 +145,8 @@
                                 <span class="sidenav-normal  ms-2  ps-1"> Promotions </span>
                             </a>
                         </li>
-                        @endcanany
-                        @can('owner_access')
+                    @endcanany
+                    @can('owner_access')
                         <li class="nav-item ">
                             <a class="nav-link text-white " href="{{ route('admin.products.index') }}">
                                 <span class="sidenav-mini-icon">P</span>
@@ -156,19 +165,18 @@
                                 <span class="sidenav-normal  ms-2  ps-1"> PaymentType </span>
                             </a>
                         </li>
-                        
-                        @endcan
-                        
-                        <li class="nav-item ">
-                            <a class="nav-link text-white " href="{{ route('admin.bonustype') }}">
-                                <span class="sidenav-mini-icon">G L</span>
-                                <span class="sidenav-normal  ms-2  ps-1"> BonusTypes </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        
+                    @endcan
+
+                    <li class="nav-item ">
+                        <a class="nav-link text-white " href="{{ route('admin.bonustype') }}">
+                            <span class="sidenav-mini-icon">G L</span>
+                            <span class="sidenav-normal  ms-2  ps-1"> BonusTypes </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
 
         <li class="nav-item">
             <a href="{{ route('logout') }}"

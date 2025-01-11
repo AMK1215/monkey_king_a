@@ -56,10 +56,10 @@
                                 <th>Total Bet Amount</th>
                                 <th>Total Win Amount</th>
                                 <th>Total Net Win</th>
-                                <th>Total Results</th>
+                                {{-- <th>Total Results</th>
                                 <th>Total Result Bet Amount</th>
                                 <th>Total Result Win Amount</th>
-                                <th>Total Result Net Win</th>
+                                <th>Total Result Net Win</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -98,10 +98,10 @@
                                             {{ number_format($data->total_result_net_win, 2) }}
                                         @endif
                                     </td>
-                                    <td>{{ $data->total_results }}</td>
+                                    {{-- <td>{{ $data->total_results }}</td>
                                     <td>{{ number_format($data->total_result_bet_amount, 2) }}</td>
                                     <td>{{ number_format($data->total_result_win_amount, 2) }}</td>
-                                    <td>{{ number_format($data->total_result_net_win, 2) }}</td>
+                                    <td>{{ number_format($data->total_result_net_win, 2) }}</td> --}}
                                 </tr>
                             @endforeach
                         </tbody>

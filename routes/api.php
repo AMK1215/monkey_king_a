@@ -19,7 +19,7 @@ use App\Http\Controllers\Api\V1\Slot\GetDaySummaryController;
 use App\Http\Controllers\Api\V1\Slot\LaunchGameController;
 use App\Http\Controllers\Api\V1\Webhook\AdjustmentController;
 use App\Http\Controllers\Api\V1\Webhook\BetController;
-use App\Http\Controllers\Api\V1\Webhook\BetNResultController;
+use App\Http\Controllers\Api\V1\Webhook\NewBetNResultController;
 use App\Http\Controllers\Api\V1\Webhook\BetResultController;
 use App\Http\Controllers\Api\V1\Webhook\CancelBetController;
 use App\Http\Controllers\Api\V1\Webhook\CancelBetNResultController;
@@ -42,7 +42,7 @@ Route::post('Seamless/PullReport', [LaunchGameController::class, 'pullReport']);
 
 // sameless route
 Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
-Route::post('BetNResult', [BetNResultController::class, 'handleBetNResult']);
+Route::post('BetNResult', [NewBetNResultController::class, 'handleBetNResult']);
 Route::post('CancelBetNResult', [CancelBetNResultController::class, 'handleCancelBetNResult']);
 Route::post('Bet', [BetController::class, 'handleBet']);
 Route::post('Result', [BetResultController::class, 'handleResult']);

@@ -31,6 +31,8 @@ class Result extends Model
         'win_amount',
         'net_win',
         'tran_date_time',
+        'old_balance',
+        'new_balance'
     ];
 
     protected $casts = [

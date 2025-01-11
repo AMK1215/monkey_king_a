@@ -108,14 +108,14 @@ class ReportVersionTwoController extends Controller
             'r.game_code',
             'r.game_name',
             'r.game_provide_name',
-            'r.old_balance',
-            'r.new_balance',
             DB::raw('NULL as bet_amount'),
             DB::raw('NULL as win_amount'),
             DB::raw('NULL as net_win'),
             'r.total_bet_amount',
             'r.win_amount as result_win_amount',
             'r.net_win as result_net_win',
+            'r.old_balance',
+            'r.new_balance',
             DB::raw('NULL as bet_time'),
             'r.created_at as result_time'
         )
@@ -137,10 +137,12 @@ class ReportVersionTwoController extends Controller
             DB::raw('COALESCE(bet_amount, total_bet_amount) as total_bet_amount'),
             DB::raw('COALESCE(win_amount, result_win_amount) as total_win_amount'),
             DB::raw('COALESCE(net_win, result_net_win) as total_net_win'),
+            DB::raw('COALESCE(old_balance, 0) as old_balance'), // Ensures balance is not NULL
+            DB::raw('COALESCE(new_balance, 0) as new_balance'), // Ensures balance is not NULL
             'bet_time',
             'result_time'
         )
-        ->orderByDesc('bet_time') // Sort by latest bet
+        ->orderByDesc(DB::raw("COALESCE(bet_time, result_time)")) // Sort by latest transaction
         ->get();
 
     // Fetch active product types
@@ -148,6 +150,80 @@ class ReportVersionTwoController extends Controller
 
     return view('report.v2_report_detail', compact('details', 'productTypes'));
 }
+
+
+//     public function getGameReportDetail($player_id, $game_code)
+// {
+//     // Fetch bet details from bet_n_results
+//     $betData = DB::table('bet_n_results as br')
+//         ->select(
+//             'br.player_id',
+//             DB::raw("NULL as player_name"), // Will be replaced by results if available
+//             'br.game_code',
+//             'br.game_name',
+//             'br.provider_code as game_provide_name',
+//             'br.bet_amount',
+//             'br.win_amount',
+//             'br.net_win',
+//             'br.old_balance',
+//             'br.new_balance',
+//             DB::raw('NULL as total_bet_amount'),
+//             DB::raw('NULL as result_win_amount'),
+//             DB::raw('NULL as result_net_win'),
+//             'br.created_at as bet_time',
+//             DB::raw('NULL as result_time')
+//         )
+//         ->where('br.player_id', $player_id)
+//         ->where('br.game_code', $game_code);
+
+//     // Fetch result details from results
+//     $resultData = DB::table('results as r')
+//         ->select(
+//             'r.player_id',
+//             'r.player_name',
+//             'r.game_code',
+//             'r.game_name',
+//             'r.game_provide_name',
+//             'r.old_balance',
+//             'r.new_balance',
+//             DB::raw('NULL as bet_amount'),
+//             DB::raw('NULL as win_amount'),
+//             DB::raw('NULL as net_win'),
+//             'r.total_bet_amount',
+//             'r.win_amount as result_win_amount',
+//             'r.net_win as result_net_win',
+//             DB::raw('NULL as bet_time'),
+//             'r.created_at as result_time'
+//         )
+//         ->where('r.player_id', $player_id)
+//         ->where('r.game_code', $game_code);
+
+//     // Combine both datasets using UNION
+//     $details = DB::query()
+//         ->fromSub(function ($query) use ($betData, $resultData) {
+//             $query->from($betData)
+//                   ->unionAll($resultData);
+//         }, 'combined_data')
+//         ->select(
+//             'player_id',
+//             DB::raw("COALESCE(player_name, player_id) as player_name"), // Use player_name if available
+//             'game_code',
+//             DB::raw("COALESCE(game_name, game_code) as game_name"), // Use game_name if available
+//             'game_provide_name',
+//             DB::raw('COALESCE(bet_amount, total_bet_amount) as total_bet_amount'),
+//             DB::raw('COALESCE(win_amount, result_win_amount) as total_win_amount'),
+//             DB::raw('COALESCE(net_win, result_net_win) as total_net_win'),
+//             'bet_time',
+//             'result_time'
+//         )
+//         ->orderByDesc('bet_time') // Sort by latest bet
+//         ->get();
+
+//     // Fetch active product types
+//     $productTypes = Product::where('is_active', 1)->get();
+
+//     return view('report.v2_report_detail', compact('details', 'productTypes'));
+// }
 
 
     // public function getGameReportDetail($player_id, $game_code)

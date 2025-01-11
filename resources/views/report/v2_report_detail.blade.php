@@ -63,15 +63,17 @@
                         <thead class="table-dark">
                             <tr>
                                 <th>Player ID</th>
-                                <th>Player Name</th>
+                                {{-- <th>Player Name</th> --}}
                                 <th>Game Code</th>
                                 <th>Game Name</th>
                                 <th>Game Provider</th>
+                                <th>AfterBalance</th>
                                 <th>Total Bet Amount</th>
                                 <th>Total Win Amount</th>
                                 <th>Total Net Win</th>
+                                <th>BeforeBalance</th>
                                 <th>Bet Time</th>
-                                <th>Result Time</th>
+                                {{-- <th>Result Time</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -82,11 +84,13 @@
                                     <td>{{ $data->game_code }}</td>
                                     <td>{{ $data->game_name }}</td>
                                     <td>{{ $data->game_provide_name }}</td>
+                                    <td>{{ number_format($data->old_balance, 2) }}</td>
                                     <td>{{ number_format($data->total_bet_amount, 2) }}</td>
                                     <td>{{ number_format($data->total_win_amount, 2) }}</td>
                                     <td>{{ number_format($data->total_net_win, 2) }}</td>
                                     <td>{{ $data->bet_time }}</td>
-                                    <td>{{ $data->result_time }}</td>
+                                    <td>{{ number_format($data->new_blance, 2) }}</td>
+                                    {{-- <td>{{ $data->result_time }}</td> --}}
                                 </tr>
                             @endforeach
                         </tbody>

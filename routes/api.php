@@ -29,9 +29,9 @@ use App\Models\Admin\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Slot\GetGameProviderController;
 use App\Http\Controllers\Api\V1\Slot\GetGameListByProviderController;
+use App\Http\Controllers\ReportVersionTwoController;
 
-
-
+Route::get('/game-report', [ReportVersionTwoController::class, 'getGameReport']);
 //auth api
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);

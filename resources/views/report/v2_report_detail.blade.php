@@ -12,7 +12,7 @@
                             <span></span>
                         </h5>
                     </div>
-                    <form action="{{ route('admin.report.detail', $playerId) }}" method="GET">
+                    {{-- <form action="{{ route('admin.report.detail', $playerId) }}" method="GET">
                         <div class="row mt-3">
                             <div class="col-md-3">
                                 <div class="input-group input-group-static mb-4">
@@ -56,7 +56,7 @@
                                 </a>
                             </div>
                         </div>
-                    </form>
+                    </form> --}}
                 </div>
                 <div class="table-responsive">
                     <table class="table table-flush" id="users-search">

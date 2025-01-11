@@ -70,9 +70,9 @@
                                 <th>Bet Amount</th>
                                 <th>Win Amount</th>
                                 <th>Net Win</th>
-                                <th>Total Bet Amount</th>
+                                {{-- <th>Total Bet Amount</th>
                                 <th>Result Win Amount</th>
-                                <th>Result Net Win</th>
+                                <th>Result Net Win</th> --}}
                                 <th>Bet Time</th>
                                 <th>Result Time</th>
                             </tr>
@@ -85,12 +85,30 @@
                                     <td>{{ $data->game_code }}</td>
                                     <td>{{ $data->game_name }}</td>
                                     <td>{{ $data->game_provide_name }}</td>
-                                    <td>{{ number_format($data->bet_amount, 2) }}</td>
-                                    <td>{{ number_format($data->win_amount, 2) }}</td>
-                                    <td>{{ number_format($data->net_win, 2) }}</td>
-                                    <td>{{ number_format($data->total_bet_amount, 2) }}</td>
+                                    <td>
+                                        @if ($data->total_bet_amount == 0)
+                                            {{ number_format($data->bet_amount, 2) }}
+                                        @else
+                                            {{ number_format($data->total_bet_amount, 2) }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($data->result_win_amount == 0)
+                                            {{ number_format($data->win_amount, 2) }}
+                                        @else
+                                            {{ number_format($data->result_win_amount, 2) }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($data->result_net_win == 0)
+                                            {{ number_format($data->net_win, 2) }}
+                                        @else
+                                            {{ number_format($data->result_net_win, 2) }}
+                                        @endif
+                                    </td>
+                                    {{-- <td>{{ number_format($data->total_bet_amount, 2) }}</td>
                                     <td>{{ number_format($data->result_win_amount, 2) }}</td>
-                                    <td>{{ number_format($data->result_net_win, 2) }}</td>
+                                    <td>{{ number_format($data->result_net_win, 2) }}</td> --}}
                                     <td>{{ $data->bet_time }}</td>
                                     <td>{{ $data->result_time }}</td>
                                 </tr>

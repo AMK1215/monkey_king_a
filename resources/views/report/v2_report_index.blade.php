@@ -70,7 +70,13 @@
                                     <td>{{ $data->game_code }}</td>
                                     <td>{{ $data->game_name }}</td>
                                     <td>{{ $data->game_provide_name }}</td>
-                                    <td>{{ $data->total_bets }}</td>
+                                    <td>
+                                        @if ($data->total_results == 0)
+                                            {{ $data->total_bets }}
+                                        @else
+                                            {{ $data->total_results }}
+                                        @endif
+                                    </td>
                                     <td>{{ number_format($data->total_bet_amount, 2) }}</td>
                                     <td>{{ number_format($data->total_win_amount, 2) }}</td>
                                     <td>{{ number_format($data->total_net_win, 2) }}</td>

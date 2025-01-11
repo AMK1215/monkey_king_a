@@ -52,21 +52,21 @@ class BannerAdsController extends Controller
             'mobile_image' => 'required|image|max:2048', // Ensure it's an image with a size limit
             'desktop_image' => 'required|image|max:2048', // Ensure it's an image with a size limit
             'type' => $isMaster ? 'required' : 'nullable',
-            'agent_id' => ($isMaster && $request->type === "single") ? 'required|exists:users,id' : 'nullable',
-            'description' => 'nullable'
+            'agent_id' => ($isMaster && $request->type === 'single') ? 'required|exists:users,id' : 'nullable',
+            'description' => 'nullable',
         ]);
-        $type = $request->type ?? "single";
+        $type = $request->type ?? 'single';
         $mobile_image = $this->handleImageUpload($request->mobile_image, 'banners_ads');
         $desktop_image = $this->handleImageUpload($request->desktop_image, 'banners_ads');
 
-        if ($type === "single") {
+        if ($type === 'single') {
             $agentId = $isMaster ? $request->agent_id : $user->id;
             $this->FeaturePermission($agentId);
             BannerAds::create([
                 'mobile_image' => $mobile_image,
                 'desktop_image' => $desktop_image,
                 'agent_id' => $agentId,
-                'description' => $request->description
+                'description' => $request->description,
             ]);
         } elseif ($type === 'all') {
             foreach ($user->agents as $agent) {
@@ -74,7 +74,7 @@ class BannerAdsController extends Controller
                     'mobile_image' => $mobile_image,
                     'desktop_image' => $desktop_image,
                     'agent_id' => $agent->id,
-                    'description' => $request->description
+                    'description' => $request->description,
                 ]);
             }
         }
@@ -114,7 +114,7 @@ class BannerAdsController extends Controller
     {
         $this->MasterAgentRoleCheck();
 
-        if (!$adsbanner) {
+        if (! $adsbanner) {
             return redirect()->back()->with('error', 'Banner Not Found');
         }
 

@@ -10,7 +10,6 @@ use Yajra\DataTables\DataTables;
 
 class GameListController extends Controller
 {
-
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -25,13 +24,13 @@ class GameListController extends Controller
                     return $row->game_provide_name;
                 })
                 ->addColumn('status', function ($row) {
-                    return $row->status == 1 
-                        ? '<span class="badge badge-success">Open</span>' 
+                    return $row->status == 1
+                        ? '<span class="badge badge-success">Open</span>'
                         : '<span class="badge badge-danger">Close</span>';
                 })
                 ->addColumn('hot_status', function ($row) {
-                    return $row->hot_status == 1 
-                        ? '<span class="badge badge-info">HotGame</span>' 
+                    return $row->hot_status == 1
+                        ? '<span class="badge badge-info">HotGame</span>'
                         : '<span class="badge badge-warning">NormalGame</span>';
                 })
                 ->addColumn('action', function ($row) {

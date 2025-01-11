@@ -26,8 +26,8 @@ class CancelBetNResultRequest extends FormRequest
             'Currency' => 'required|string|max:5',
             'TranId' => 'required|string|max:30',
             'GameCode' => 'required|string|max:50',
-            //'BetAmount' => 'required|numeric',
-            //'WinAmount' => 'nullable|numeric',
+            // 'BetAmount' => 'required|numeric',
+            // 'WinAmount' => 'nullable|numeric',
             'TranDateTime' => 'required|date',
             'ProviderCode' => 'required|string|max:50',
 
@@ -139,7 +139,7 @@ class CancelBetNResultRequest extends FormRequest
                     'TranId' => $this->getTranId(),
                     'GameCode' => $this->getGameCode(),
                     // 'BetAmount' => $this->getBetAmount(),
-                    //'WinAmount' => $this->getWinAmount(),
+                    // 'WinAmount' => $this->getWinAmount(),
                     'TranDateTime' => $this->getTranDateTime(),
                     'ProviderCode' => $this->getProviderCode(),
 

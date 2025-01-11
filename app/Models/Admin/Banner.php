@@ -14,10 +14,10 @@ class Banner extends Model
         'mobile_image',
         'desktop_image',
         'agent_id',
-        'admin_id'
+        'admin_id',
     ];
 
-    protected $appends = ['mobile_image_url' , 'desktop_image_url'];
+    protected $appends = ['mobile_image_url', 'desktop_image_url'];
 
     public function agent()
     {

@@ -39,7 +39,7 @@ class GetDaySummaryController extends Controller
 
         // Post data to the provider's API and handle the response
         $providerApiUrl = 'https://api.sm-sspi-uat.com/api/opgateway/v1/op/GetDaySummary';
-        //$response = Http::post($providerApiUrl, $payload);
+        // $response = Http::post($providerApiUrl, $payload);
 
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',

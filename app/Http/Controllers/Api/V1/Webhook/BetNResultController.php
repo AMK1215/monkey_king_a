@@ -6,6 +6,7 @@ use App\Enums\StatusCode;
 use App\Enums\TransactionName;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Slot\BetNResultWebhookRequest;
+use App\Models\Admin\GameList;
 use App\Models\User;
 use App\Models\Webhook\BetNResult;
 use App\Services\PlaceBetWebhookService;
@@ -14,8 +15,6 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Models\Admin\GameList;
-
 
 class BetNResultController extends Controller
 {
@@ -119,7 +118,7 @@ class BetNResultController extends Controller
                     'auth_token' => $transaction['AuthToken'] ?? 'default_password',
                     'status' => 'processed',
                     'old_balance' => $afterBalance,
-                    'new_balance' => $newBalance
+                    'new_balance' => $newBalance,
 
                 ]);
 

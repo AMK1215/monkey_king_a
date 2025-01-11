@@ -33,7 +33,7 @@ class AgentController extends Controller
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
-        //kzt
+        // kzt
         // $users = User::with('roles')
         //     ->whereHas('roles', function ($query) {
         //         $query->where('role_id', self::AGENT_ROLE);
@@ -41,7 +41,7 @@ class AgentController extends Controller
         //     ->where('agent_id', auth()->id())
         //     ->orderBy('id', 'desc')
         //     ->get();
-        //kzt
+        // kzt
         // wlk
         $users = User::query()->agent()->get();
 

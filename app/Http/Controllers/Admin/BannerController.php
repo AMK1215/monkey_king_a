@@ -56,11 +56,11 @@ class BannerController extends Controller
             'agent_id' => ($isMaster && $request->type === 'single') ? 'required|exists:users,id' : 'nullable',
         ]);
 
-        $type = $request->type ?? "single";
+        $type = $request->type ?? 'single';
         $mobile_image = $this->handleImageUpload($request->mobile_image, 'banners');
         $desktop_image = $this->handleImageUpload($request->desktop_image, 'banners');
 
-        if ($type === "single") {
+        if ($type === 'single') {
             $agentId = $isMaster ? $request->agent_id : $user->id;
             $this->FeaturePermission($agentId);
 
@@ -186,5 +186,4 @@ class BannerController extends Controller
 
         return $updateData;
     }
-
 }

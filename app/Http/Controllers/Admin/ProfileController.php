@@ -32,7 +32,7 @@ class ProfileController extends Controller
 
     }
 
-    //UserProfile
+    // UserProfile
     public function UserProfile()
     {
         if (auth()->user()->hasRole('Admin')) {
@@ -44,7 +44,7 @@ class ProfileController extends Controller
 
             return view('user_profile', compact('user'));
         }
-        //return view('admin.profile.index');
+        // return view('admin.profile.index');
     }
 
     /**
@@ -192,7 +192,7 @@ class ProfileController extends Controller
     // password change function
     public function changePassword(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $request->validate([
             'old_password' => 'required',
             'password' => 'required|min:6',
@@ -219,7 +219,7 @@ class ProfileController extends Controller
     // phone address update function
     public function PhoneAddressChange(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $request->validate([
             'phone' => 'required',
             'address' => 'required',
@@ -243,7 +243,7 @@ class ProfileController extends Controller
 
     public function KpayNoChange(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         // $request->validate([
         //     'kpay_no' => 'required',
         // ]);
@@ -266,7 +266,7 @@ class ProfileController extends Controller
 
     public function JoinDate(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $request->validate([
             'join_date' => 'required',
         ]);
@@ -296,7 +296,7 @@ class ProfileController extends Controller
     public function saveImage(UploadedFile $image)
     {
         $path = 'profile_image/'.Str::random();
-        //$path = 'images/product_image';
+        // $path = 'images/product_image';
 
         if (! Storage::exists($path)) {
             Storage::makeDirectory($path, 0755, true);

@@ -32,11 +32,11 @@ class DatabaseBackup extends Command
         $dbName = env('DB_DATABASE');
         $dbUser = env('DB_USERNAME');
         $dbPass = env('DB_PASSWORD');
-        
-        $backupPath = storage_path('app/backups');
-        $backupFile = "{$backupPath}/backup_" . date('Y-m-d_H-i-s') . ".sql";
 
-        if (!file_exists($backupPath)) {
+        $backupPath = storage_path('app/backups');
+        $backupFile = "{$backupPath}/backup_".date('Y-m-d_H-i-s').'.sql';
+
+        if (! file_exists($backupPath)) {
             mkdir($backupPath, 0755, true);
         }
 
@@ -54,13 +54,12 @@ class DatabaseBackup extends Command
             $this->cleanUpOldBackups($backupPath);
         } else {
             $this->error("Failed to back up the database. Error code: $resultCode");
-            $this->error("Command output: " . implode("\n", $output));
+            $this->error('Command output: '.implode("\n", $output));
         }
     }
 
     /**
-     *
-     * @param string $backupPath
+     * @param  string  $backupPath
      */
     protected function cleanUpOldBackups($backupPath)
     {

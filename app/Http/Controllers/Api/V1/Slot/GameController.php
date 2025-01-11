@@ -19,7 +19,7 @@ class GameController extends Controller
 {
     use HttpResponses;
 
-    //game_types
+    // game_types
     public function gameType()
     {
         $gameTypes = GameType::where('status', 1)->get();
@@ -27,7 +27,7 @@ class GameController extends Controller
         return $this->success(GameTypeResource::collection($gameTypes));
     }
 
-    //providers
+    // providers
     public function gameTypeProducts($gameTypeID)
     {
         $gameType = GameType::with(['products' => function ($query) {
@@ -39,20 +39,20 @@ class GameController extends Controller
         return $this->success(GameProviderResource::collection($gameType->products), 'Game Detail Successfully');
     }
 
-    //game_lists
+    // game_lists
     public function gameList($product_id, $game_type_id, Request $request)
     {
         $gameLists = GameList::with('product')
             ->where('product_id', $product_id)
             ->where('game_type_id', $game_type_id)
             ->where('status', 1)
-            ->where('game_name', 'like', '%' . $request->name . '%')
+            ->where('game_name', 'like', '%'.$request->name.'%')
             ->paginate(9);
 
         return GameDetailResource::collection($gameLists);
     }
 
-    //hot_games
+    // hot_games
     public function HotgameList()
     {
         $gameLists = Product::whereHas('gameLists', function ($query) {

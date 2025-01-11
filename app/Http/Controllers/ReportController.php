@@ -57,7 +57,7 @@ class ReportController extends Controller
             ->leftJoin($this->getSubquery('bonuses'), 'bonuses.user_id', '=', 'results.user_id')
             ->leftJoin($this->getSubquery('deposit_requests', 'status = 1'), 'deposit_requests.user_id', '=', 'results.user_id')
             ->leftJoin($this->getSubquery('with_draw_requests', 'status = 1'), 'with_draw_requests.user_id', '=', 'results.user_id')
-            ->when($request->player_id, fn($query) => $query->where('results.player_id', $request->player_id));
+            ->when($request->player_id, fn ($query) => $query->where('results.player_id', $request->player_id));
 
         $this->applyDateFilter($query, $request);
         $this->applyRoleFilter($query, $adminId);

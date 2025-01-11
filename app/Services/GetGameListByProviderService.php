@@ -19,7 +19,7 @@ class GetGameListByProviderService
         $requestDateTime = now()->setTimezone('UTC')->format('Y-m-d H:i:s');
 
         // Generate MD5 Signature
-        $signature = md5($functionName . $requestDateTime . $operatorId . $secretKey);
+        $signature = md5($functionName.$requestDateTime.$operatorId.$secretKey);
 
         // Construct payload
         $payload = [
@@ -30,7 +30,7 @@ class GetGameListByProviderService
         ];
 
         // API URL for GetGameListByProvider
-        $url = $baseUrl . $functionName;
+        $url = $baseUrl.$functionName;
 
         // Log::info('Sending GetGameListByProvider API Request', [
         //     'url' => $url,

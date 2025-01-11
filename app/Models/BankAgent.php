@@ -11,7 +11,7 @@ class BankAgent extends Model
 
     protected $fillable = ['id', 'agent_id', 'bank_id'];
 
-    public function agent() 
+    public function agent()
     {
         return $this->belongsTo(User::class, 'agent_id');
     }

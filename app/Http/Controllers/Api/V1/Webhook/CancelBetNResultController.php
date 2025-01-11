@@ -78,9 +78,9 @@ class CancelBetNResultController extends Controller
                             'currency' => $transaction['Currency'],
                             'tran_id' => $transaction['TranId'],
                             'game_code' => $transaction['GameCode'],
-                            //'bet_amount' => $transaction['BetAmount'],
+                            // 'bet_amount' => $transaction['BetAmount'],
                             // 'win_amount' => $transaction['WinAmount'],
-                            //'net_win' => $transaction['WinAmount'] - $transaction['BetAmount'],
+                            // 'net_win' => $transaction['WinAmount'] - $transaction['BetAmount'],
                             'tran_date_time' => $transaction['TranDateTime'],
                             'status' => 'processed',
                         ]);

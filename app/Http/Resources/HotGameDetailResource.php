@@ -15,10 +15,11 @@ class HotGameDetailResource extends JsonResource
     public function toArray(Request $request): array
     {
         $imgUrl = $this->gameTypes[0]->pivot->image;
+
         return [
             'id' => $this->id,
             'provider_name' => $this->provider_name,
-            'imgUrl' => asset('assets/img/provider_logo/' . $imgUrl),
+            'imgUrl' => asset('assets/img/provider_logo/'.$imgUrl),
             'hot_lists' => $this->gameLists->map(function ($game) {
                 return [
                     'code' => $game->game_code,

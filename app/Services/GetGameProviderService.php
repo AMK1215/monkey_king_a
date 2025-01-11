@@ -20,7 +20,7 @@ class GetGameProviderService
         $requestDateTime = now()->setTimezone('UTC')->format('Y-m-d H:i:s');
 
         // Generate MD5 Signature
-        $signature = md5($functionName . $requestDateTime . $operatorId . $secretKey);
+        $signature = md5($functionName.$requestDateTime.$operatorId.$secretKey);
 
         // Construct Payload
         $payload = [
@@ -30,8 +30,8 @@ class GetGameProviderService
         ];
 
         // API URL for GetGameProvider
-        $url = $baseUrl . $functionName;
-         // Log the request details for debugging
+        $url = $baseUrl.$functionName;
+        // Log the request details for debugging
         Log::info('Sending GetGameProvider API Request', [
             'url' => $url,
             'payload' => $payload,
@@ -46,7 +46,6 @@ class GetGameProviderService
         ]);
 
         Log::info('API Response Structure', ['response' => $response]);
-
 
         // Return the response as an array
         return $response->json();

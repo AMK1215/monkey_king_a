@@ -17,11 +17,11 @@ class BonusResource extends JsonResource
         return [
             'id' => $this->id,
             'user_name' => $this->user->user_name,
-            'type_id' => $this->type->name ,
+            'type_id' => $this->type->name,
             'amount' => $this->amount,
             'before_amount' => $this->before_amount,
             'after_amount' => $this->after_amount,
-            'created_at' => $this->created_at->format('Y-m-d H:i:s')
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }
 }

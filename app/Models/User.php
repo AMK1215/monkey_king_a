@@ -78,7 +78,7 @@ class User extends Authenticatable implements Wallet
         'password' => 'hashed',
         'type' => UserType::class,
     ];
-    
+
     public function getIsAdminAttribute()
     {
         return $this->roles()->where('id', 1)->exists();

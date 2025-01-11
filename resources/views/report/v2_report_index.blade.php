@@ -48,7 +48,7 @@
                         <thead class="table-dark">
                             <tr>
                                 <th>Player ID</th>
-                                <th>Player Name</th>
+                                {{-- <th>Player Name</th> --}}
                                 <th>Game Code</th>
                                 <th>Game Name</th>
                                 <th>Game Provider</th>
@@ -63,7 +63,7 @@
                             @foreach ($report as $data)
                                 <tr>
                                     <td>{{ $data->player_id }}</td>
-                                    <td>{{ $data->player_name }}</td>
+                                    {{-- <td>{{ $data->player_name }}</td> --}}
                                     <td>{{ $data->game_code }}</td>
                                     <td>{{ $data->game_name }}</td>
                                     <td>{{ $data->game_provide_name }}</td>

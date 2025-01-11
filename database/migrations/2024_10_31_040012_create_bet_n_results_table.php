@@ -24,8 +24,8 @@ return new class extends Migration
             $table->decimal('bet_amount', 18, 4)->default('0.00');   // Decimal with 4 precision
             $table->decimal('win_amount', 18, 4)->default('0.00');   // Decimal with 4 precision
             $table->decimal('net_win', 18, 4)->default(0.00);      // Decimal with 4 precision
-            //$table->timestamp('tran_date_time')->useCurrent(); // ISO 8601 Standard timestamp
-            //$table->timestamp('tran_date_time');
+            // $table->timestamp('tran_date_time')->useCurrent(); // ISO 8601 Standard timestamp
+            // $table->timestamp('tran_date_time');
 
             $table->string('tran_date_time', 100);
             $table->string('provider_code')->default('code_1');

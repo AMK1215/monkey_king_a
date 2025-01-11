@@ -6,6 +6,7 @@ use App\Enums\StatusCode;
 use App\Enums\TransactionName;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Slot\BetNResultWebhookRequest;
+use App\Models\Admin\GameList;
 use App\Models\User;
 use App\Models\Webhook\BetNResult;
 use App\Services\PlaceBetWebhookService;
@@ -14,7 +15,6 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Models\Admin\GameList;
 
 class NewBetNResultController extends Controller
 {
@@ -29,8 +29,9 @@ class NewBetNResultController extends Controller
             foreach ($transactions as $transaction) {
                 // Get the player
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
-                if (!$player) {
+                if (! $player) {
                     Log::warning('Invalid player detected', ['PlayerId' => $transaction['PlayerId']]);
+
                     return PlaceBetWebhookService::buildResponse(StatusCode::InvalidPlayerPassword, 0, 0);
                 }
 
@@ -38,6 +39,7 @@ class NewBetNResultController extends Controller
                 $signature = $this->generateSignature($transaction);
                 if ($signature !== $transaction['Signature']) {
                     Log::warning('Signature validation failed', ['transaction' => $transaction, 'generated_signature' => $signature]);
+
                     return $this->buildErrorResponse(StatusCode::InvalidSignature);
                 }
 
@@ -45,6 +47,7 @@ class NewBetNResultController extends Controller
                 $existingTransaction = BetNResult::where('tran_id', $transaction['TranId'])->first();
                 if ($existingTransaction) {
                     Log::warning('Duplicate TranId detected', ['TranId' => $transaction['TranId']]);
+
                     return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $player->wallet->balanceFloat);
                 }
 
@@ -57,6 +60,7 @@ class NewBetNResultController extends Controller
                         'BetAmount' => $transaction['BetAmount'],
                         'balance' => $beforeBalance,
                     ]);
+
                     return $this->buildErrorResponse(StatusCode::InsufficientBalance, $beforeBalance);
                 }
 
@@ -100,17 +104,18 @@ class NewBetNResultController extends Controller
                     'auth_token' => $transaction['AuthToken'] ?? 'default_password',
                     'status' => 'processed',
                     'old_balance' => $beforeBalance, // Store BEFORE balance
-                    'new_balance' => $afterBalance  // Store AFTER balance
+                    'new_balance' => $afterBalance,  // Store AFTER balance
                 ]);
 
                 Log::info('Transaction processed successfully', [
                     'TranId' => $transaction['TranId'],
                     'Before Balance' => $beforeBalance,
-                    'After Balance' => $afterBalance
+                    'After Balance' => $afterBalance,
                 ]);
             }
 
             DB::commit();
+
             return $this->buildSuccessResponse($afterBalance);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -119,6 +124,7 @@ class NewBetNResultController extends Controller
                 'line' => $e->getLine(),
                 'file' => $e->getFile(),
             ]);
+
             return response()->json(['message' => 'Failed to handle BetNResult'], 500);
         }
     }
@@ -146,11 +152,11 @@ class NewBetNResultController extends Controller
     private function generateSignature(array $transaction): string
     {
         return md5(
-            'BetNResult' .
-            $transaction['TranId'] .
-            $transaction['RequestDateTime'] .
-            $transaction['OperatorId'] .
-            config('game.api.secret_key') .
+            'BetNResult'.
+            $transaction['TranId'].
+            $transaction['RequestDateTime'].
+            $transaction['OperatorId'].
+            config('game.api.secret_key').
             $transaction['PlayerId']
         );
     }

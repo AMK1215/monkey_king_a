@@ -43,13 +43,13 @@ class PlayerController extends Controller
         }
 
         $users = User::with(['roles', 'userLog'])
-            ->whereHas('roles', fn($query) => $query->where('role_id', self::PLAYER_ROLE))
-            ->when($request->player_id, fn($query) => $query->where('user_name', $request->player_id))
+            ->whereHas('roles', fn ($query) => $query->where('role_id', self::PLAYER_ROLE))
+            ->when($request->player_id, fn ($query) => $query->where('user_name', $request->player_id))
             ->when(
                 $request->start_date && $request->end_date,
-                fn($query) => $query->whereBetween('created_at', [
-                    $request->start_date . ' 00:00:00',
-                    $request->end_date . ' 23:59:59',
+                fn ($query) => $query->whereBetween('created_at', [
+                    $request->start_date.' 00:00:00',
+                    $request->end_date.' 23:59:59',
                 ])
             )
             ->when($request->ip_address, function ($query) use ($request) {
@@ -69,7 +69,6 @@ class PlayerController extends Controller
         return view('admin.player.index', compact('users'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
@@ -81,7 +80,7 @@ class PlayerController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
         $player_name = $this->generateRandomString();
-        //$banks = Bank::all();
+        // $banks = Bank::all();
         $paymentTypes = PaymentType::all();
 
         return view('admin.player.create', compact('player_name', 'paymentTypes'));
@@ -179,7 +178,7 @@ class PlayerController extends Controller
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
-        //$player->destroy();
+        // $player->destroy();
         User::destroy($player->id);
 
         return redirect()->route('admin.player.index')->with('success', 'User deleted successfully');
@@ -336,7 +335,7 @@ class PlayerController extends Controller
 
         $nextNumber = $latestPlayer ? intval(substr($latestPlayer->user_name, 3)) + 1 : 1;
 
-        return 'SPM' . str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
+        return 'SPM'.str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
     }
 
     private function getRefrenceId($prefix = 'REF')

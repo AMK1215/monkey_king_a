@@ -32,7 +32,7 @@ class Result extends Model
         'net_win',
         'tran_date_time',
         'old_balance',
-        'new_balance'
+        'new_balance',
     ];
 
     protected $casts = [

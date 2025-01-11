@@ -19,28 +19,28 @@ class BannerAdsSeeder extends Seeder
                 'desktop_image' => '1.png',
                 'agent_id' => 4,
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ],
             [
                 'mobile_image' => '2.png',
                 'desktop_image' => '2.png',
                 'agent_id' => 5,
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ],
             [
                 'mobile_image' => '3.png',
                 'desktop_image' => '3.png',
                 'agent_id' => 6,
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ],
             [
                 'mobile_image' => '3.png',
                 'desktop_image' => '3.png',
                 'agent_id' => 7,
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ],
         ];
 

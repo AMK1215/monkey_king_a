@@ -64,7 +64,7 @@ class PullReport extends Command
             'Sign' => $signature,
             'RequestTime' => $requestTime,
         ];
-        //Log::info($data);
+        // Log::info($data);
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
@@ -82,7 +82,7 @@ class PullReport extends Command
                     if ($user && $user->agent_id) {
                         $agent = User::where('id', $user->agent_id)->first();
 
-                        //Log::info($agent);
+                        // Log::info($agent);
 
                         if ($agent) {
                             $agent_commission = $agent->commission; // Get the agent's commission
@@ -135,7 +135,7 @@ class PullReport extends Command
                             'status' => $report['Status'],
                             'created_on' => $report['CreatedOn'],
                             'modified_on' => $report['ModifiedOn'],
-                            //'settlement_date' => $report['SettlementDate'],
+                            // 'settlement_date' => $report['SettlementDate'],
                             'settlement_date' => $report['SettlementDate'] ?? now(),
                             'agent_id' => $user->agent_id, // Store the agent_id
                             'master_id' => $master->id, // Store the agent_id
@@ -158,7 +158,7 @@ class PullReport extends Command
                             'status' => $report['Status'],
                             'created_on' => $report['CreatedOn'],
                             'modified_on' => $report['ModifiedOn'],
-                            //'settlement_date' => $report['SettlementDate'],
+                            // 'settlement_date' => $report['SettlementDate'],
                             'settlement_date' => $report['SettlementDate'] ?? now(),
                             'agent_id' => $user->agent_id, // Store the agent_id
                             'master_id' => $master->id, // Store the agent_id

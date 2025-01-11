@@ -80,7 +80,7 @@ class GameController extends Controller
             'link' => 'required',
         ]);
         if ($request->hasFile('image')) {
-            //file delete
+            // file delete
             File::delete(public_path('assets/img/games/'.$game->image));
             // image
             $image = $request->file('image');

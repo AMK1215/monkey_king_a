@@ -73,7 +73,7 @@ class PlaceBetNewVersionController extends Controller
         DB::beginTransaction();
         try {
             // Create and store the event in the database
-            //$event = $this->createEvent($request);
+            // $event = $this->createEvent($request);
 
             // Insert bets using chunking for better performance
             $message = $this->insertBets($transactions, $event);  // Insert bets in chunks

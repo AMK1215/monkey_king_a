@@ -13,7 +13,7 @@ class Product extends Model
     protected $fillable = ['code', 'name', 'short_name', 'order', 'status', 'game_list_status'];
 
     protected $appends = ['imgUrl']; // Changed from 'image' to 'imgUrl'
-    //protected $appends = ['image'];
+    // protected $appends = ['image'];
 
     public function gameTypes()
     {

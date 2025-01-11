@@ -40,13 +40,13 @@ class PaymentTypeController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'image' => 'required'
+            'image' => 'required',
         ]);
         $filename = $this->handleImageUpload($request->image, 'paymentType');
 
         PaymentType::create([
             'name' => $request->name,
-            'image' => $filename
+            'image' => $filename,
         ]);
 
         return redirect(route('admin.paymentType.index'))->with('success', 'New Payment Type Added.');
@@ -81,7 +81,7 @@ class PaymentTypeController extends Controller
 
         $paymentType->update([
             'name' => $request->name,
-            'image' => $filename
+            'image' => $filename,
         ]);
 
         return redirect()->route('admin.paymentType.index');
@@ -96,6 +96,7 @@ class PaymentTypeController extends Controller
 
         $this->handleImageDelete($paymentType->image, 'paymentType');
         $paymentType->delete();
+
         return redirect()->route('admin.paymentType.index');
     }
 }

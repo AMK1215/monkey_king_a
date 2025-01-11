@@ -27,6 +27,7 @@ class BankController extends Controller
         $banks = $auth->hasPermission('master_access') ?
             Bank::query()->master()->latest()->get() :
             Bank::query()->agent()->latest()->get();
+
         return view('admin.banks.index', compact('banks'));
     }
 
@@ -70,10 +71,10 @@ class BankController extends Controller
             ]);
             BankAgent::create([
                 'bank_id' => $bank->id,
-                'agent_id' => $agentId
+                'agent_id' => $agentId,
             ]);
 
-        } elseif ($type === "all") {
+        } elseif ($type === 'all') {
             $bank = Bank::create([
                 'account_name' => $request->account_name,
                 'account_number' => $request->account_number,
@@ -82,7 +83,7 @@ class BankController extends Controller
             foreach ($user->agents as $agent) {
                 BankAgent::create([
                     'bank_id' => $bank->id,
-                    'agent_id' => $agent->id
+                    'agent_id' => $agent->id,
                 ]);
             }
         }
@@ -118,7 +119,7 @@ class BankController extends Controller
         $this->MasterAgentRoleCheck();
         $user = Auth::user();
         $isMaster = $user->hasRole('Master');
-        if (!$bank) {
+        if (! $bank) {
             return redirect()->back()->with('error', 'Bank Not Found');
         }
         $data = $request->validate([
@@ -130,16 +131,16 @@ class BankController extends Controller
         $bank->update([
             'account_name' => $request->account_name,
             'account_number' => $request->account_number,
-            'payment_type_id' => $request->payment_type_id
+            'payment_type_id' => $request->payment_type_id,
         ]);
 
-        if ($request->type === "single") {
+        if ($request->type === 'single') {
             $agentId = $isMaster ? $request->agent_id : $user->id;
             $bank->bankAgents()->update([
-                'agent_id' => $agentId
+                'agent_id' => $agentId,
             ]);
 
-        } elseif ($request->type === "all") {
+        } elseif ($request->type === 'all') {
             foreach ($user->agents as $agent) {
                 $bank->bankAgents()->updateOrCreate(
                     ['agent_id' => $agent->id],

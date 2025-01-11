@@ -15,7 +15,7 @@ class BannerAds extends Model
         'desktop_image',
         'description',
         'agent_id',
-        'admin_id'
+        'admin_id',
     ];
 
     protected $appends = ['mobile_image_url', 'desktop_image_url'];
@@ -34,7 +34,7 @@ class BannerAds extends Model
 
     public function getDesktopImageUrlAttribute()
     {
-        return 'https://superman788.online/assets/img/banners_ads/' . $this->desktop_image;
+        return 'https://superman788.online/assets/img/banners_ads/'.$this->desktop_image;
     }
 
     public function scopeAgent($query)

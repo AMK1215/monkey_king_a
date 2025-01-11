@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Bank\BankController;
 use App\Http\Controllers\Api\V1\BannerController;
 use App\Http\Controllers\Api\V1\ContactController;
-//use App\Http\Controllers\Api\V1\Game\LaunchGameController;
+// use App\Http\Controllers\Api\V1\Game\LaunchGameController;
 use App\Http\Controllers\Api\V1\GetBalanceController;
 use App\Http\Controllers\Api\V1\Player\DepositController;
 use App\Http\Controllers\Api\V1\Player\PlayerTransactionLogController;
@@ -16,23 +16,23 @@ use App\Http\Controllers\Api\V1\Player\WithDrawController;
 use App\Http\Controllers\Api\V1\PromotionController;
 use App\Http\Controllers\Api\V1\Slot\GameController;
 use App\Http\Controllers\Api\V1\Slot\GetDaySummaryController;
+use App\Http\Controllers\Api\V1\Slot\GetGameListByProviderController;
+use App\Http\Controllers\Api\V1\Slot\GetGameProviderController;
 use App\Http\Controllers\Api\V1\Slot\LaunchGameController;
 use App\Http\Controllers\Api\V1\Webhook\AdjustmentController;
 use App\Http\Controllers\Api\V1\Webhook\BetController;
-use App\Http\Controllers\Api\V1\Webhook\NewBetNResultController;
 use App\Http\Controllers\Api\V1\Webhook\BetResultController;
 use App\Http\Controllers\Api\V1\Webhook\CancelBetController;
 use App\Http\Controllers\Api\V1\Webhook\CancelBetNResultController;
+use App\Http\Controllers\Api\V1\Webhook\NewBetNResultController;
 use App\Http\Controllers\Api\V1\Webhook\RewardController;
+use App\Http\Controllers\ReportVersionTwoController;
 use App\Http\Controllers\TestController;
 use App\Models\Admin\Role;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\Slot\GetGameProviderController;
-use App\Http\Controllers\Api\V1\Slot\GetGameListByProviderController;
-use App\Http\Controllers\ReportVersionTwoController;
 
 Route::get('/game-report', [ReportVersionTwoController::class, 'getGameReportApi']);
-//auth api
+// auth api
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('v1/validate', [AuthController::class, 'callback']);
@@ -52,13 +52,12 @@ Route::post('Reward', [RewardController::class, 'handleReward']);
 Route::post('GetGameProvider', [GetGameProviderController::class, 'fetchGameProviders']);
 Route::post('GetGameListByProvider', [GetGameListByProviderController::class, 'fetchGameListByProvider']);
 
-
 // for slot
 Route::post('/transaction-details/{tranId}', [GetDaySummaryController::class, 'getTransactionDetails']);
 
 Route::group(['middleware' => ['auth:sanctum', 'playerBannedCheck']], function () {
 
-    //games api
+    // games api
     Route::get('game_types', [GameController::class, 'gameType']);
     Route::get('providers/{id}', [GameController::class, 'gameTypeProducts']);
     Route::get('game_lists/{product_id}/{game_type_id}', action: [GameController::class, 'gameList']);
@@ -67,14 +66,14 @@ Route::group(['middleware' => ['auth:sanctum', 'playerBannedCheck']], function (
     Route::get('wager-logs', [WagerController::class, 'index']);
     Route::get('transactions', [TransactionController::class, 'index']);
 
-    //auth api
+    // auth api
     Route::get('user', [AuthController::class, 'getUser']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('changePassword', [AuthController::class, 'changePassword']);
     Route::post('profile', [AuthController::class, 'profile']);
     Route::post('updateProfile', [AuthController::class, 'updateProfile']);
 
-    //common api
+    // common api
     Route::get('banners', [BannerController::class, 'index']);
     Route::get('banner_text', [BannerController::class, 'bannerText']);
     Route::get('ads_banner', [BannerController::class, 'AdsBannerIndex']);

@@ -64,7 +64,7 @@ class GameController extends Controller
 
     public function HotgameList()
     {
-        //$gameLists = HotGame::all();
+        // $gameLists = HotGame::all();
         $gameLists = GameList::where('hot_status', 1)
             ->get();
 

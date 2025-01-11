@@ -17,7 +17,7 @@ class LaunchGameController extends Controller
 
     public function launchGame(Request $request)
     {
-        //Log::info($request->all());
+        // Log::info($request->all());
         // Validate the request data
         $validatedData = $request->validate([
             'productId' => 'required|integer',
@@ -70,7 +70,7 @@ class LaunchGameController extends Controller
 
     public function directLaunchGame(Request $request)
     {
-        //Log::info($request->all());
+        // Log::info($request->all());
         // Validate the request data
         $validatedData = $request->validate([
             'productId' => 'required|integer',

@@ -13,7 +13,7 @@ class LaunchGameController extends Controller
     use HttpResponses;
 
     protected $gameService;
-    //private const WEB_PLAT_FORM = 0;
+    // private const WEB_PLAT_FORM = 0;
 
     private const ENG_LANGUAGE_CODE = 'en-us';
 

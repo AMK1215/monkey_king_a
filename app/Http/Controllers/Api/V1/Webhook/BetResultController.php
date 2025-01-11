@@ -144,7 +144,7 @@ class BetResultController extends Controller
     private function isValidSignature(array $transaction): bool
     {
         $generatedSignature = $this->generateSignature($transaction);
-        //Log::info('Generated result signature', ['GeneratedSignature' => $generatedSignature]);
+        // Log::info('Generated result signature', ['GeneratedSignature' => $generatedSignature]);
 
         if ($generatedSignature !== $transaction['Signature']) {
             Log::warning('Signature validation failed for transaction', [
@@ -224,66 +224,65 @@ class BetResultController extends Controller
     // }
 
     private function logGameAndCreateResult($transaction, $player)
-{
-    // Retrieve game information based on the game code
-    $game = GameList::where('game_code', $transaction['GameCode'])->first();
-    $game_name = $game ? $game->game_name : null;
-    $provider_name = $game ? $game->game_provide_name : null;
+    {
+        // Retrieve game information based on the game code
+        $game = GameList::where('game_code', $transaction['GameCode'])->first();
+        $game_name = $game ? $game->game_name : null;
+        $provider_name = $game ? $game->game_provide_name : null;
 
-    // Capture balance BEFORE processing the transaction
-    $beforeBalance = $player->wallet->balanceFloat;
+        // Capture balance BEFORE processing the transaction
+        $beforeBalance = $player->wallet->balanceFloat;
 
-    // Process payout if WinAmount > 0
-    if ($transaction['WinAmount'] > 0) {
-        $this->processTransfer(
-            User::adminUser(),
-            $player,
-            TransactionName::Payout,
-            $transaction['WinAmount']
-        );
+        // Process payout if WinAmount > 0
+        if ($transaction['WinAmount'] > 0) {
+            $this->processTransfer(
+                User::adminUser(),
+                $player,
+                TransactionName::Payout,
+                $transaction['WinAmount']
+            );
+        }
+
+        // Refresh balance AFTER processing the payout
+        $player->wallet->refreshBalance();
+        $newBalance = $player->wallet->balanceFloat;
+
+        // Create a result record in the database
+        try {
+            Result::create([
+                'user_id' => $player->id,
+                'player_name' => $player->name,
+                'game_provide_name' => $provider_name,
+                'game_name' => $game_name,
+                'operator_id' => $transaction['OperatorId'],
+                'request_date_time' => $transaction['RequestDateTime'],
+                'signature' => $transaction['Signature'],
+                'player_id' => $transaction['PlayerId'],
+                'currency' => $transaction['Currency'],
+                'round_id' => $transaction['RoundId'],
+                'bet_ids' => $transaction['BetIds'],
+                'result_id' => $transaction['ResultId'],
+                'game_code' => $transaction['GameCode'],
+                'total_bet_amount' => $transaction['TotalBetAmount'],
+                'win_amount' => $transaction['WinAmount'],
+                'net_win' => $transaction['NetWin'],
+                'tran_date_time' => $transaction['TranDateTime'],
+                'old_balance' => $beforeBalance, // Balance before processing payout
+                'new_balance' => $newBalance, // Balance after processing payout
+            ]);
+
+            Log::info('Game result logged successfully', [
+                'PlayerId' => $transaction['PlayerId'],
+                'ResultId' => $transaction['ResultId'],
+                'Old Balance' => $beforeBalance,
+                'New Balance' => $newBalance,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to log game result', [
+                'PlayerId' => $transaction['PlayerId'],
+                'Error' => $e->getMessage(),
+                'ResultId' => $transaction['ResultId'],
+            ]);
+        }
     }
-
-    // Refresh balance AFTER processing the payout
-    $player->wallet->refreshBalance();
-    $newBalance = $player->wallet->balanceFloat;
-
-    // Create a result record in the database
-    try {
-        Result::create([
-            'user_id' => $player->id,
-            'player_name' => $player->name,
-            'game_provide_name' => $provider_name,
-            'game_name' => $game_name,
-            'operator_id' => $transaction['OperatorId'],
-            'request_date_time' => $transaction['RequestDateTime'],
-            'signature' => $transaction['Signature'],
-            'player_id' => $transaction['PlayerId'],
-            'currency' => $transaction['Currency'],
-            'round_id' => $transaction['RoundId'],
-            'bet_ids' => $transaction['BetIds'],
-            'result_id' => $transaction['ResultId'],
-            'game_code' => $transaction['GameCode'],
-            'total_bet_amount' => $transaction['TotalBetAmount'],
-            'win_amount' => $transaction['WinAmount'],
-            'net_win' => $transaction['NetWin'],
-            'tran_date_time' => $transaction['TranDateTime'],
-            'old_balance' => $beforeBalance, // Balance before processing payout
-            'new_balance' => $newBalance // Balance after processing payout
-        ]);
-
-        Log::info('Game result logged successfully', [
-            'PlayerId' => $transaction['PlayerId'],
-            'ResultId' => $transaction['ResultId'],
-            'Old Balance' => $beforeBalance,
-            'New Balance' => $newBalance
-        ]);
-    } catch (\Exception $e) {
-        Log::error('Failed to log game result', [
-            'PlayerId' => $transaction['PlayerId'],
-            'Error' => $e->getMessage(),
-            'ResultId' => $transaction['ResultId'],
-        ]);
-    }
-}
-
 }

@@ -114,7 +114,7 @@ class RolesController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
         // delete
-        //$role = Role::find($role);
+        // $role = Role::find($role);
         $role->delete();
 
         // redirect

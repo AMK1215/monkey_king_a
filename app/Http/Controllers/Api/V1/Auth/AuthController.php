@@ -161,6 +161,6 @@ class AuthController extends Controller
 
         $nextNumber = $latestPlayer ? intval(substr($latestPlayer->user_name, 3)) + 1 : 1;
 
-        return 'SPM' . str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
+        return 'SPM'.str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
     }
 }

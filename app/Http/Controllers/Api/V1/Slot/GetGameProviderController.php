@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api\V1\Slot;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Services\GetGameProviderService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
 
 class GetGameProviderController extends Controller
 {
@@ -18,127 +17,122 @@ class GetGameProviderController extends Controller
     }
 
     public function fetchGameProviders(Request $request)
-{
-    Log::info('Incoming Request to GetGameProvider', $request->all());
+    {
+        Log::info('Incoming Request to GetGameProvider', $request->all());
 
-    $response = $this->getGameProviderService->getGameProvider();
+        $response = $this->getGameProviderService->getGameProvider();
 
-    // Explicitly log and check the response
-    Log::info('API Response Structure', ['response' => $response]);
+        // Explicitly log and check the response
+        Log::info('API Response Structure', ['response' => $response]);
 
-    // Check for status and GameProviders key
-    if (is_array($response) && isset($response['status']) && $response['status'] == 200) {
-        if (isset($response['GameProviders']) && is_array($response['GameProviders'])) {
-            Log::info('GameProviders Data', ['data' => $response['GameProviders']]);
+        // Check for status and GameProviders key
+        if (is_array($response) && isset($response['status']) && $response['status'] == 200) {
+            if (isset($response['GameProviders']) && is_array($response['GameProviders'])) {
+                Log::info('GameProviders Data', ['data' => $response['GameProviders']]);
+
+                return response()->json([
+                    'success' => true,
+                    'data' => $response['GameProviders'],
+                ]);
+            }
+
+            // Handle missing GameProviders data
             return response()->json([
-                'success' => true,
-                'data' => $response['GameProviders'],
-            ]);
+                'success' => false,
+                'message' => 'GameProviders data is missing or invalid',
+            ], 400);
         }
 
-        // Handle missing GameProviders data
+        // Handle general API error
         return response()->json([
             'success' => false,
-            'message' => 'GameProviders data is missing or invalid',
+            'message' => $response['Description'] ?? 'An unknown error occurred',
         ], 400);
     }
 
-    // Handle general API error
-    return response()->json([
-        'success' => false,
-        'message' => $response['Description'] ?? 'An unknown error occurred',
-    ], 400);
-}
+    //     public function fetchGameProviders(Request $request)
+    // {
+    //     Log::info('Incoming Request to GetGameProvider', $request->all());
 
+    //     $response = $this->getGameProviderService->getGameProvider();
 
-//     public function fetchGameProviders(Request $request)
-// {
-//     Log::info('Incoming Request to GetGameProvider', $request->all());
+    //     // Explicitly log and check the response
+    //     Log::info('API Response Structure', ['response' => $response]);
 
-//     $response = $this->getGameProviderService->getGameProvider();
+    //     // Check for status and GameProviders key
+    //     if (is_array($response) && isset($response['status']) && $response['status'] == 200) {
+    //         if (isset($response['GameProviders']) && is_array($response['GameProviders'])) {
+    //             Log::info('GameProviders Data', ['data' => $response['GameProviders']]);
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'data' => $response['GameProviders'],
+    //             ]);
+    //         }
 
-//     // Explicitly log and check the response
-//     Log::info('API Response Structure', ['response' => $response]);
+    //         // Handle missing GameProviders data
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'GameProviders data is missing or invalid',
+    //         ], 400);
+    //     }
 
-//     // Check for status and GameProviders key
-//     if (is_array($response) && isset($response['status']) && $response['status'] == 200) {
-//         if (isset($response['GameProviders']) && is_array($response['GameProviders'])) {
-//             Log::info('GameProviders Data', ['data' => $response['GameProviders']]);
-//             return response()->json([
-//                 'success' => true,
-//                 'data' => $response['GameProviders'],
-//             ]);
-//         }
+    //     // Handle general API error
+    //     return response()->json([
+    //         'success' => false,
+    //         'message' => $response['Description'] ?? 'An unknown error occurred',
+    //     ], 400);
+    // }
 
-//         // Handle missing GameProviders data
-//         return response()->json([
-//             'success' => false,
-//             'message' => 'GameProviders data is missing or invalid',
-//         ], 400);
-//     }
+    //     public function fetchGameProviders(Request $request)
+    // {
+    //     //Log::info('Incoming Request to GetGameProvider', $request->all());
 
-//     // Handle general API error
-//     return response()->json([
-//         'success' => false,
-//         'message' => $response['Description'] ?? 'An unknown error occurred',
-//     ], 400);
-// }
+    //     $response = $this->getGameProviderService->getGameProvider();
 
+    //     //Log::info('API Response Structure', ['response' => $response]);
+    //     Log::info('GameProviders Data', ['data' => $response['GameProviders'] ?? 'No Data Found']);
 
-//     public function fetchGameProviders(Request $request)
-// {
-//     //Log::info('Incoming Request to GetGameProvider', $request->all());
+    //     if (isset($response['status']) && $response['status'] == 200) {
+    //         if (isset($response['GameProviders'])) {
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'data' => $response['GameProviders'],
+    //             ]);
+    //         }
 
-//     $response = $this->getGameProviderService->getGameProvider();
+    //         // Handle missing GameProviders data
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'GameProviders data is missing',
+    //         ], 400);
+    //     }
 
-//     //Log::info('API Response Structure', ['response' => $response]);
-//     Log::info('GameProviders Data', ['data' => $response['GameProviders'] ?? 'No Data Found']);
+    //     return response()->json([
+    //         'success' => false,
+    //         'message' => $response['Description'] ?? 'An unknown error occurred',
+    //     ], 400);
+    // }
 
+    //     public function fetchGameProviders(Request $request)
+    // {
+    //     Log::info('Incoming Request to GetGameProvider', $request->all());
 
-//     if (isset($response['status']) && $response['status'] == 200) {
-//         if (isset($response['GameProviders'])) {
-//             return response()->json([
-//                 'success' => true,
-//                 'data' => $response['GameProviders'],
-//             ]);
-//         }
+    //     $response = $this->getGameProviderService->getGameProvider();
 
-//         // Handle missing GameProviders data
-//         return response()->json([
-//             'success' => false,
-//             'message' => 'GameProviders data is missing',
-//         ], 400);
-//     }
+    //     Log::info('API Response Structure', ['response' => $response]);
 
-//     return response()->json([
-//         'success' => false,
-//         'message' => $response['Description'] ?? 'An unknown error occurred',
-//     ], 400);
-// }
+    //     if (isset($response['status']) && $response['status'] == 200) {
+    //         return response()->json([
+    //             'success' => true,
+    //             'data' => $response['GameProviders'] ?? [],
+    //         ]);
+    //     }
 
-
-//     public function fetchGameProviders(Request $request)
-// {
-//     Log::info('Incoming Request to GetGameProvider', $request->all());
-
-//     $response = $this->getGameProviderService->getGameProvider();
-
-//     Log::info('API Response Structure', ['response' => $response]);
-
-
-//     if (isset($response['status']) && $response['status'] == 200) {
-//         return response()->json([
-//             'success' => true,
-//             'data' => $response['GameProviders'] ?? [],
-//         ]);
-//     }
-
-//     return response()->json([
-//         'success' => false,
-//         'message' => $response['Description'] ?? 'An error occurred',
-//     ], 400);
-// }
-
+    //     return response()->json([
+    //         'success' => false,
+    //         'message' => $response['Description'] ?? 'An error occurred',
+    //     ], 400);
+    // }
 
     // public function fetchGameProviders(Request $request)
     // {

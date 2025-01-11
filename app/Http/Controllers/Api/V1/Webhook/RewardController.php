@@ -66,7 +66,7 @@ class RewardController extends Controller
                     $transaction['Amount']
                 );
 
-                //$newBalance = $player->wallet->refreshBalance()->balanceFloat;
+                // $newBalance = $player->wallet->refreshBalance()->balanceFloat;
                 $player->wallet->refreshBalance();
                 $newBalance = $player->wallet->balanceFloat;
 
@@ -136,7 +136,7 @@ class RewardController extends Controller
     }
 }
 
-//$newBalance = $player->wallet->refreshBalance()->balanceFloat;
-//$request->getMember()->wallet->refreshBalance();
+// $newBalance = $player->wallet->refreshBalance()->balanceFloat;
+// $request->getMember()->wallet->refreshBalance();
 
-//$newBalance = $request->getMember()->balanceFloat;
+// $newBalance = $request->getMember()->balanceFloat;

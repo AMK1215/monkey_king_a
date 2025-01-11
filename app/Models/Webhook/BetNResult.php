@@ -31,7 +31,7 @@ class BetNResult extends Model
         'status',
         'cancelled_at',
         'old_balance',
-        'new_balance'
+        'new_balance',
     ];
 
     public function user()

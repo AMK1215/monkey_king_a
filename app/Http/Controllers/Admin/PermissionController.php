@@ -37,7 +37,7 @@ class PermissionController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|unique:permissions,title',
 
-            //'body' => 'required|min:3'
+            // 'body' => 'required|min:3'
         ]);
 
         if ($validator->fails()) {
@@ -74,7 +74,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
-        /// validate the request
+        // / validate the request
         $request->validate([
             'title' => 'required|unique:permissions,title,'.$permission->id,
         ]);

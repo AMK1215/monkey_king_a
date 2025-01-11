@@ -13,7 +13,7 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
 
-//auth routes
+// auth routes
 Route::get('/login', [LoginController::class, 'showLogin'])->name('showLogin');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');

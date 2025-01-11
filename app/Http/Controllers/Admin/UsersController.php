@@ -13,7 +13,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-//use Gate;
+// use Gate;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -115,7 +115,7 @@ class UsersController extends Controller
             $operatorcode = $this->operatorCode; // operatorcode
             $username = $request->name;
             $secret_key = $this->secretKey;
-            $md5_hash = md5($operatorcode.$username.$secret_key); //signature
+            $md5_hash = md5($operatorcode.$username.$secret_key); // signature
             // change to UpperCase $md5_hash
             $md5_hash = strtoupper($md5_hash);
             $backend_password = $this->backendPassword;

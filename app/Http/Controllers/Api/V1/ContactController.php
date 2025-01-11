@@ -26,7 +26,7 @@ class ContactController extends Controller
         return $this->success($contact);
     }
 
-    //contact api
+    // contact api
     public function contact()
     {
         $contacts = Contact::agentPlayer()->get();

@@ -26,10 +26,9 @@ use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ReportVersionTwoController;
 use App\Models\Admin\Role;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ReportVersionTwoController;
-
 
 Route::group([
     'prefix' => 'admin', 'as' => 'admin.',
@@ -129,11 +128,10 @@ Route::group([
         Route::get('/detail/{playerId}', [ReportController::class, 'detail'])->name('report.detail');
     });
 
-    //Report V2
+    // Report V2
     Route::get('/game-report', [ReportVersionTwoController::class, 'getGameReport'])->name('game.report');
     Route::get('/game-report/{player_id}/{game_code}', [ReportVersionTwoController::class, 'getGameReportDetail'])
-    ->name('game.report.detail');
-
+        ->name('game.report.detail');
 
     // get bet deatil
     Route::get('get-bet-detail', [GetBetDetailController::class, 'index'])->name('getBetDetail');

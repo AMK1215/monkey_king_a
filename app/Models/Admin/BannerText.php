@@ -14,7 +14,7 @@ class BannerText extends Model
     protected $fillable = [
         'text',
         'agent_id',
-        'admin_id'
+        'admin_id',
     ];
 
     public function agent()

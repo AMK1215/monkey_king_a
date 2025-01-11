@@ -10,11 +10,12 @@ use Illuminate\Support\Facades\Log;
 class GoogleDriveService
 {
     protected $client;
+
     protected $service;
 
     public function __construct()
     {
-        $this->client = new Client();
+        $this->client = new Client;
 
         $this->client->setAccessToken($this->getAccessToken());
 
@@ -28,7 +29,7 @@ class GoogleDriveService
     {
         $token = session('google_access_token');
 
-        if (!is_array($token) || !isset($token['access_token']) || $this->client->isAccessTokenExpired()) {
+        if (! is_array($token) || ! isset($token['access_token']) || $this->client->isAccessTokenExpired()) {
             $token = $this->fetchNewAccessToken();
             session(['google_access_token' => $token]);
         }
@@ -48,13 +49,12 @@ class GoogleDriveService
         $accessToken = $this->client->fetchAccessTokenWithRefreshToken(env('GOOGLE_REFRESH_TOKEN'));
 
         if (isset($accessToken['error'])) {
-            throw new \Exception('Failed to fetch new access token: ' . $accessToken['error_description']);
+            throw new \Exception('Failed to fetch new access token: '.$accessToken['error_description']);
         }
 
         // Return the access token
         return $accessToken;
     }
-
 
     /**
      * Upload a file to Google Drive.
@@ -62,7 +62,7 @@ class GoogleDriveService
     public function uploadToDrive(string $filePath, string $fileName)
     {
         try {
-            $file = new DriveFile();
+            $file = new DriveFile;
             $file->setName($fileName);
             $file->setMimeType('application/sql'); // Adjust MIME type as needed
 
@@ -79,8 +79,9 @@ class GoogleDriveService
 
             return $uploadedFile->id;
         } catch (\Exception $e) {
-            Log::error('Error uploading file to Google Drive: ' . $e->getMessage());
-            return null;
+            Log::error('Error uploading file to Google Drive: '.$e->getMessage());
+
+            return;
         }
     }
 }

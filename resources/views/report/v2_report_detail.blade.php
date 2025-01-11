@@ -74,7 +74,7 @@
                                 <th>Result Win Amount</th>
                                 <th>Result Net Win</th> --}}
                                 <th>Bet Time</th>
-                                <th>Result Time</th>
+                                {{-- <th>Result Time</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -110,7 +110,7 @@
                                     <td>{{ number_format($data->result_win_amount, 2) }}</td>
                                     <td>{{ number_format($data->result_net_win, 2) }}</td> --}}
                                     <td>{{ $data->bet_time }}</td>
-                                    <td>{{ $data->result_time }}</td>
+                                    {{-- <td>{{ $data->result_time }}</td> --}}
                                 </tr>
                             @endforeach
                         </tbody>

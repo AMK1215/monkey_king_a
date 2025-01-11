@@ -77,9 +77,27 @@
                                             {{ $data->total_results }}
                                         @endif
                                     </td>
-                                    <td>{{ number_format($data->total_bet_amount, 2) }}</td>
-                                    <td>{{ number_format($data->total_win_amount, 2) }}</td>
-                                    <td>{{ number_format($data->total_net_win, 2) }}</td>
+                                    <td>
+                                        @if ($data->total_result_bet_amount == 0)
+                                            {{ number_format($data->total_bet_amount, 2) }}
+                                        @else
+                                            {{ number_format($data->total_result_bet_amount, 2) }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($data->total_result_bet_amount == 0)
+                                            {{ number_format($data->total_win_amount, 2) }}
+                                        @else
+                                            {{ number_format($data->total_result_win_amount, 2) }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($data->total_result_net_win == 0)
+                                            {{ number_format($data->total_net_win, 2) }}
+                                        @else
+                                            {{ number_format($data->total_result_net_win, 2) }}
+                                        @endif
+                                    </td>
                                     <td>{{ $data->total_results }}</td>
                                     <td>{{ number_format($data->total_result_bet_amount, 2) }}</td>
                                     <td>{{ number_format($data->total_result_win_amount, 2) }}</td>

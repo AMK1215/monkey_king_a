@@ -7,20 +7,27 @@
                 <div class="card-header pb-0">
 
                     <div class="card-body">
-                        <h5 class="mb-0">Win/Lose Report</h5>
+                        <h5 class="mb-0">Win/Lose Details
+                            <a href="{{ url('/admin/game-report') }}" class="btn btn-secondary mb-3">Back to Report</a>
+                            <span></span>
+                        </h5>
                     </div>
-                    <form action="{{ route('admin.report.index') }}" method="GET">
+                    <form action="{{ route('admin.report.detail', $playerId) }}" method="GET">
                         <div class="row mt-3">
                             <div class="col-md-3">
                                 <div class="input-group input-group-static mb-4">
-                                    <label for="">PlayerId</label>
-                                    <input type="text" class="form-control" name="player_id"
-                                        value="{{ request()->player_id }}">
+                                    <label for="">Product Type</label>
+                                    <select name="product_type_id" id="" class="form-control">
+                                        <option value="" disabled>Select Product type</option>
+                                        @foreach ($productTypes as $type)
+                                            <option value="{{ $type->provider_name }}">{{ $type->provider_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="input-group input-group-static mb-4">
-                                    <label for="">StartDate</label>
+                                    <label for="">Start Date</label>
                                     <input type="datetime-local" class="form-control" name="start_date"
                                         value="{{ request()->get('start_date') }}">
                                 </div>
@@ -34,7 +41,15 @@
                             </div>
                             <div class="col-md-3">
                                 <button class="btn btn-sm btn-primary" id="search" type="submit">Search</button>
-                                <a href="{{ route('admin.report.index') }}"
+                                <a href="{{ route('admin.report.detail', $playerId) }}"
+                                    class="btn btn-link text-primary ms-auto border-0" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" title="Refresh">
+                                    <i class="material-icons text-lg mt-0">refresh</i>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-sm btn-primary" id="search" type="submit">Search</button>
+                                <a href="{{ route('admin.report.detail', $playerId) }}"
                                     class="btn btn-link text-primary ms-auto border-0" data-bs-toggle="tooltip"
                                     data-bs-placement="bottom" title="Refresh">
                                     <i class="material-icons text-lg mt-0">refresh</i>
@@ -52,64 +67,36 @@
                                 <th>Game Code</th>
                                 <th>Game Name</th>
                                 <th>Game Provider</th>
-                                <th>Total Bets</th>
+                                <th>Bet Amount</th>
+                                <th>Win Amount</th>
+                                <th>Net Win</th>
                                 <th>Total Bet Amount</th>
-                                <th>Total Win Amount</th>
-                                <th>Total Net Win</th>
-                                <th>Action</th>
+                                <th>Result Win Amount</th>
+                                <th>Result Net Win</th>
+                                <th>Bet Time</th>
+                                <th>Result Time</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($report as $data)
+                            @foreach ($details as $data)
                                 <tr>
                                     <td>{{ $data->player_id }}</td>
                                     <td>{{ $data->player_name }}</td>
                                     <td>{{ $data->game_code }}</td>
                                     <td>{{ $data->game_name }}</td>
                                     <td>{{ $data->game_provide_name }}</td>
-                                    <td>
-                                        @if ($data->total_results == 0)
-                                            {{ $data->total_bets }}
-                                        @else
-                                            {{ $data->total_results }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($data->total_result_bet_amount == 0)
-                                            {{ number_format($data->total_bet_amount, 2) }}
-                                        @else
-                                            {{ number_format($data->total_result_bet_amount, 2) }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($data->total_result_bet_amount == 0)
-                                            {{ number_format($data->total_win_amount, 2) }}
-                                        @else
-                                            {{ number_format($data->total_result_win_amount, 2) }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($data->total_result_net_win == 0)
-                                            {{ number_format($data->total_net_win, 2) }}
-                                        @else
-                                            {{ number_format($data->total_result_net_win, 2) }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.game.report.detail', ['player_id' => $data->player_id, 'game_code' => $data->game_code]) }}"
-                                            class="btn btn-primary">
-                                            Detail
-                                        </a>
-                                    </td>
+                                    <td>{{ number_format($data->bet_amount, 2) }}</td>
+                                    <td>{{ number_format($data->win_amount, 2) }}</td>
+                                    <td>{{ number_format($data->net_win, 2) }}</td>
+                                    <td>{{ number_format($data->total_bet_amount, 2) }}</td>
+                                    <td>{{ number_format($data->result_win_amount, 2) }}</td>
+                                    <td>{{ number_format($data->result_net_win, 2) }}</td>
+                                    <td>{{ $data->bet_time }}</td>
+                                    <td>{{ $data->result_time }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-
-                    <!-- Laravel Pagination Links -->
-                    <div class="d-flex justify-content-center">
-                        {{ $report->links() }}
-                    </div>
                 </div>
             </div>
         </div>
@@ -129,7 +116,7 @@
             const dataTableSearch = new simpleDatatables.DataTable("#users-search", {
                 searchable: true,
                 fixedHeight: false,
-                perPage: 10
+                perPage: 7
             });
 
         };

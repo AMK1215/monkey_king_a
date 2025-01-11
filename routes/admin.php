@@ -129,8 +129,10 @@ Route::group([
         Route::get('/detail/{playerId}', [ReportController::class, 'detail'])->name('report.detail');
     });
 
-
-    Route::get('/game-report', [ReportVersionTwoController      ::class, 'getGameReport'])->name('game.report');
+    //Report V2
+    Route::get('/game-report', [ReportVersionTwoController::class, 'getGameReport'])->name('game.report');
+    Route::get('/game-report/{player_id}/{game_code}', [ReportVersionTwoController::class, 'getGameReportDetail'])
+    ->name('game.report.detail');
 
 
     // get bet deatil
